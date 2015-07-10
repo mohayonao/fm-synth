@@ -19,10 +19,6 @@ export default class FMSynth {
     return this[OPERATORS][0].context;
   }
 
-  get outlet() {
-    return this[OUTLET];
-  }
-
   get operators() {
     return this[OPERATORS].slice();
   }
@@ -84,10 +80,6 @@ function findOnEndedNode(operators) {
   return { onended: null };
 }
 
-function peel(node) {
-  return (node && node.outlet instanceof global.AudioNode) ? node.outlet : node;
-}
-
 export function isValidAlgorithm(algorithm, numOfOperators) {
   let X = String.fromCharCode(64 + numOfOperators);
   let re = new RegExp(`^[A-${X}]-(?:[A-${X}]-)*[>A-${X}]$`, "i");
@@ -140,7 +132,7 @@ export function build(pattern, operators) {
       let nextNode = findOperatorByName(nextToken);
 
       if (nextToken === ">") {
-        outlets.push(peel(node));
+        outlets.push(node);
       } else if (nextNode.frequency instanceof global.AudioParam) {
         node.connect(nextNode.frequency);
       } else {

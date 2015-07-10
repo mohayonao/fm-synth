@@ -1,7 +1,7 @@
 import "web-audio-test-api";
 import assert from "power-assert";
 import sinon from "sinon";
-import FMSynth from "../src/FMSynth";
+import FMSynth, { OUTLET } from "../src/FMSynth";
 import * as FMSynthUtils from "../src/FMSynth";
 
 describe("FMSynth", () => {
@@ -27,21 +27,6 @@ describe("FMSynth", () => {
       let fm = new FMSynth("D-C-B-A->", [ A, B, C, D ]);
 
       assert(fm.context === audioContext);
-    });
-  });
-  describe("#outlet: AudioNode", () => {
-    it("works", () => {
-      let fm = new FMSynth("D-C-B-A->", [ A, B, C, D ]);
-
-      assert(fm.outlet instanceof global.AudioNode);
-      assert(fm.outlet.$isConnectedFrom(A));
-    });
-    it("works with multiple output operators", () => {
-      let fm = new FMSynth("D-C->; B-A->", [ A, B, C, D ]);
-
-      assert(fm.outlet instanceof global.AudioNode);
-      assert(fm.outlet.$isConnectedFrom(A));
-      assert(fm.outlet.$isConnectedFrom(C));
     });
   });
   describe("#operators: Operator[]", () => {
@@ -82,7 +67,7 @@ describe("FMSynth", () => {
 
       fm.connect(audioContext.destination);
 
-      assert(audioContext.destination.$isConnectedFrom(fm.outlet));
+      assert(audioContext.destination.$isConnectedFrom(fm[OUTLET]));
     });
   });
   describe("#disconnect(destination: AudioNode): void", () => {
@@ -92,7 +77,7 @@ describe("FMSynth", () => {
       fm.connect(audioContext.destination);
       fm.disconnect(0);
 
-      assert(!audioContext.destination.$isConnectedFrom(fm.outlet));
+      assert(!audioContext.destination.$isConnectedFrom(fm[OUTLET]));
     });
   });
   describe("#start(when: number): void", () => {
@@ -145,15 +130,6 @@ describe("FMSynthUtils", () => {
     describe("algorithm notation", () => {
       it("works", () => {
         let outlet = FMSynthUtils.build("B-A; A-B; A->", [ A, B ]);
-
-        assert.deepEqual(outlet, [ A ]);
-        assert(B.$isConnectedTo(A.frequency));
-        assert(A.$isConnectedTo(B.frequency));
-      });
-      it("works with outlet interface", () => {
-        let wrappedA = { outlet: A, frequency: A.frequency, connect: A.connect.bind(A) };
-        let wrappedB = { outlet: B, frequency: B.frequency, connect: B.connect.bind(B) };
-        let outlet = FMSynthUtils.build("B-A; A-B; A->", [ wrappedA, wrappedB ]);
 
         assert.deepEqual(outlet, [ A ]);
         assert(B.$isConnectedTo(A.frequency));
