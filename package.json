@@ -1,0 +1,19 @@
+{
+  "name": "@mohayonao/fm-synth",
+  "description": "simple frequency modulation synthesizer",
+  "version": "0.0.0",
+  "author": "mohayonao <mohayonao@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/mohayonao/fm-synth/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/mohayonao/fm-synth/",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohayonao/fm-synth.git"
+  },
+  "scripts": {}
+}
