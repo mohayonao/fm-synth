@@ -50,24 +50,18 @@ let fm = new FMSynth("D-C->; B-A->", [ A, B, C, D ]);
 
 Now, the instance of FMSynth builds the below graph by the given algorithm `"D-C->; B-A->"`.
 
-```
-+-------------+        +-------------+
-| D: Operator |        | B: Operator |
-+-------------+        +-------------+
-  |                      |
-  |  +-------------+   +--------------+
-  |  | C: Operator |   | A: DelayNode |
-  +---> frequency  |   |              |
-     +-------------+   +--------------+
-       |                 |
-       +-----------------+
-                |
-           +----------+
-           | GainNode |
-           +----------+
-```
+![fm-synth](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/fm-synth.png)
 
 ## Algorithm Presets
+### 1 Operator
+![1 operator algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/1-op-alg.png)
+
+### 2 Operators
+![2 operators algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/2-op-alg.png)
+
+### 3 Operators
+![3 operators algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/3-op-alg.png)
+
 ### 4 Operators
 ![4 operators algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/4-op-alg.png)
 
