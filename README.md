@@ -23,10 +23,9 @@ Browser
 
 #### Instance attribute
 - `context: AudioContext`
-- `outlet: AudioNode`
 - `operators: any[]`
 - `algorithm: string`
-- `onended: EventHandler`
+- `onended: function`
 
 #### Instance methods
 - `connect(destination: AudioNode): void`
