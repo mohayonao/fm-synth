@@ -80,11 +80,6 @@ var FMSynth = (function () {
       return this[OPERATORS][0].context;
     }
   }, {
-    key: "outlet",
-    get: function get() {
-      return this[OUTLET];
-    }
-  }, {
     key: "operators",
     get: function get() {
       return this[OPERATORS].slice();
@@ -127,10 +122,6 @@ function findOnEndedNode(operators) {
   }
 
   return { onended: null };
-}
-
-function peel(node) {
-  return node && node.outlet instanceof global.AudioNode ? node.outlet : node;
 }
 
 function isValidAlgorithm(algorithm, numOfOperators) {
@@ -186,7 +177,7 @@ function build(pattern, operators) {
       var nextNode = findOperatorByName(nextToken);
 
       if (nextToken === ">") {
-        outlets.push(peel(node));
+        outlets.push(node);
       } else if (nextNode.frequency instanceof global.AudioParam) {
         node.connect(nextNode.frequency);
       } else {
