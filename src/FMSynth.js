@@ -1,9 +1,9 @@
 import ALGORITHMS from "./algorithms";
 
-export const OUTLETS = typeof Symbol !== "undefined" ? Symbol("OUTLETS") : "_@mohayonao/operator:OUTLETS";
-export const OPERATORS = typeof Symbol !== "undefined" ? Symbol("OPERATORS") : "_@mohayonao/operator:OPERATORS";
-export const ALGORITHM = typeof Symbol !== "undefined" ? Symbol("ALGORITHM") : "_@mohayonao/operator:ALGORITHM";
-export const ONENDED = typeof Symbol !== "undefined" ? Symbol("ONENDED") : "_@mohayonao/operator:ONENDED";
+const OUTLETS = typeof Symbol !== "undefined" ? Symbol("OUTLETS") : "_@mohayonao/operator:OUTLETS";
+const OPERATORS = typeof Symbol !== "undefined" ? Symbol("OPERATORS") : "_@mohayonao/operator:OPERATORS";
+const ALGORITHM = typeof Symbol !== "undefined" ? Symbol("ALGORITHM") : "_@mohayonao/operator:ALGORITHM";
+const ONENDED = typeof Symbol !== "undefined" ? Symbol("ONENDED") : "_@mohayonao/operator:ONENDED";
 
 export default class FMSynth {
   constructor(algorithm, operators) {
