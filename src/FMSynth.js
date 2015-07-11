@@ -133,7 +133,7 @@ export function build(pattern, operators) {
 
       if (nextToken === ">") {
         outlets.push(node);
-      } else if (nextNode.frequency instanceof global.AudioParam) {
+      } else if (typeof nextNode.frequency === "object") {
         node.connect(nextNode.frequency);
       } else {
         node.connect(nextNode);
