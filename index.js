@@ -1,1 +1,1 @@
-module.exports = require("./lib/FMSynth");
+module.exports = require("./lib");
