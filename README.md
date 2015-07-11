@@ -39,29 +39,20 @@ let A = audioContext.createDelay();
 let B = new Operator(audioContext);
 let C = new Operator(audioContext);
 let D = new Operator(audioContext);
-let fm = new FMSynth("D-C->; B-A->", [ A, B, C, D ]);
+let fm = new FMSynth("E-D-C->; B-A->", [ A, B, C, D, 0 ]);
 ```
 
-- `A`, `B`, `C` ... `Z`: index of the operator array
+- `A`, `B`, `C` ... `Z`: index of the operators
 - `-`: connection (connects to a node's frequency or node self if not has frequency)
 - `>`: connection to output
 - `;`: separator
+- `0` in operators mean OFF. Those are ignored in the audio graph.
 
 Now, the instance of FMSynth builds the below graph by the given algorithm `"D-C->; B-A->"`.
 
 ![fm-synth](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/fm-synth.png)
 
 ## Algorithm Presets
-### 1 Operator
-![1 operator algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/1-op-alg.png)
-
-### 2 Operators
-![2 operators algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/2-op-alg.png)
-
-### 3 Operators
-![3 operators algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/3-op-alg.png)
-
-### 4 Operators
 ![4 operators algorithm](https://raw.githubusercontent.com/wiki/mohayonao/fm-synth/images/4-op-alg.png)
 
 ## See Also
