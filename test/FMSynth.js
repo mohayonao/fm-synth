@@ -1,7 +1,7 @@
 import "web-audio-test-api";
 import assert from "power-assert";
 import sinon from "sinon";
-import FMSynth, { OUTLET } from "../src/FMSynth";
+import FMSynth from "../src/FMSynth";
 import * as FMSynthUtils from "../src/FMSynth";
 
 describe("FMSynth", () => {
@@ -67,7 +67,7 @@ describe("FMSynth", () => {
 
       fm.connect(audioContext.destination);
 
-      assert(audioContext.destination.$isConnectedFrom(fm[OUTLET]));
+      assert(audioContext.destination.$isConnectedFrom(A));
     });
   });
   describe("#disconnect(destination: AudioNode): void", () => {
@@ -77,7 +77,7 @@ describe("FMSynth", () => {
       fm.connect(audioContext.destination);
       fm.disconnect(0);
 
-      assert(!audioContext.destination.$isConnectedFrom(fm[OUTLET]));
+      assert(!audioContext.destination.$isConnectedFrom(A));
     });
   });
   describe("#start(when: number): void", () => {
