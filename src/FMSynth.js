@@ -1,6 +1,6 @@
 import ALGORITHMS from "./algorithms";
 
-export const OUTLET = typeof Symbol !== "undefined" ? Symbol("OUTLET") : "_@mohayonao/operator:OUTLET";
+export const OUTLETS = typeof Symbol !== "undefined" ? Symbol("OUTLETS") : "_@mohayonao/operator:OUTLETS";
 export const OPERATORS = typeof Symbol !== "undefined" ? Symbol("OPERATORS") : "_@mohayonao/operator:OPERATORS";
 export const ALGORITHM = typeof Symbol !== "undefined" ? Symbol("ALGORITHM") : "_@mohayonao/operator:ALGORITHM";
 export const ONENDED = typeof Symbol !== "undefined" ? Symbol("ONENDED") : "_@mohayonao/operator:ONENDED";
@@ -9,7 +9,7 @@ export default class FMSynth {
   constructor(algorithm, operators) {
     let outlets = build(algorithm, operators);
 
-    this[OUTLET] = createOutletNode(outlets);
+    this[OUTLETS] = outlets;
     this[OPERATORS] = operators;
     this[ALGORITHM] = algorithm;
     this[ONENDED] = findOnEndedNode(operators);
@@ -36,11 +36,15 @@ export default class FMSynth {
   }
 
   connect(destination) {
-    this[OUTLET].connect(destination);
+    this[OUTLETS].forEach((outlet) => {
+      outlet.connect(destination);
+    });
   }
 
   disconnect(...args) {
-    this[OUTLET].disconnect(...args);
+    this[OUTLETS].forEach((outlet) => {
+      outlet.disconnect(...args);
+    });
   }
 
   start(when) {
@@ -58,16 +62,6 @@ export default class FMSynth {
       }
     });
   }
-}
-
-function createOutletNode(outlets) {
-  let outlet = outlets[0].context.createGain();
-
-  outlets.forEach((_outlet) => {
-    _outlet.connect(outlet);
-  });
-
-  return outlet;
 }
 
 function findOnEndedNode(operators) {
