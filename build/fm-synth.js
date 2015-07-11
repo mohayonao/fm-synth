@@ -2,7 +2,6 @@
 module.exports = require("./lib/FMSynth");
 
 },{"./lib/FMSynth":2}],2:[function(require,module,exports){
-(function (global){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22,15 +21,10 @@ var _algorithms = require("./algorithms");
 
 var _algorithms2 = _interopRequireDefault(_algorithms);
 
-var OUTLET = typeof Symbol !== "undefined" ? Symbol("OUTLET") : "_@mohayonao/operator:OUTLET";
-exports.OUTLET = OUTLET;
+var OUTLETS = typeof Symbol !== "undefined" ? Symbol("OUTLETS") : "_@mohayonao/operator:OUTLETS";
 var OPERATORS = typeof Symbol !== "undefined" ? Symbol("OPERATORS") : "_@mohayonao/operator:OPERATORS";
-exports.OPERATORS = OPERATORS;
 var ALGORITHM = typeof Symbol !== "undefined" ? Symbol("ALGORITHM") : "_@mohayonao/operator:ALGORITHM";
-exports.ALGORITHM = ALGORITHM;
 var ONENDED = typeof Symbol !== "undefined" ? Symbol("ONENDED") : "_@mohayonao/operator:ONENDED";
-
-exports.ONENDED = ONENDED;
 
 var FMSynth = (function () {
   function FMSynth(algorithm, operators) {
@@ -38,7 +32,7 @@ var FMSynth = (function () {
 
     var outlets = build(algorithm, operators);
 
-    this[OUTLET] = createOutletNode(outlets);
+    this[OUTLETS] = outlets;
     this[OPERATORS] = operators;
     this[ALGORITHM] = algorithm;
     this[ONENDED] = findOnEndedNode(operators);
@@ -47,14 +41,20 @@ var FMSynth = (function () {
   _createClass(FMSynth, [{
     key: "connect",
     value: function connect(destination) {
-      this[OUTLET].connect(destination);
+      this[OUTLETS].forEach(function (outlet) {
+        outlet.connect(destination);
+      });
     }
   }, {
     key: "disconnect",
     value: function disconnect() {
-      var _OUTLET;
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-      (_OUTLET = this[OUTLET]).disconnect.apply(_OUTLET, arguments);
+      this[OUTLETS].forEach(function (outlet) {
+        outlet.disconnect.apply(outlet, args);
+      });
     }
   }, {
     key: "start",
@@ -103,16 +103,6 @@ var FMSynth = (function () {
 })();
 
 exports["default"] = FMSynth;
-
-function createOutletNode(outlets) {
-  var outlet = outlets[0].context.createGain();
-
-  outlets.forEach(function (_outlet) {
-    _outlet.connect(outlet);
-  });
-
-  return outlet;
-}
 
 function findOnEndedNode(operators) {
   for (var i = 0, imax = operators.length; i < imax; i++) {
@@ -178,7 +168,7 @@ function build(pattern, operators) {
 
       if (nextToken === ">") {
         outlets.push(node);
-      } else if (nextNode.frequency instanceof global.AudioParam) {
+      } else if (typeof nextNode.frequency === "object") {
         node.connect(nextNode.frequency);
       } else {
         node.connect(nextNode);
@@ -191,7 +181,6 @@ function build(pattern, operators) {
 
   return outlets;
 }
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./algorithms":3}],3:[function(require,module,exports){
 "use strict";
 
