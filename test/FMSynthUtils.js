@@ -1,6 +1,5 @@
 import "web-audio-test-api";
 import assert from "power-assert";
-import sinon from "sinon";
 import FMSynthUtils from "../src/FMSynthUtils";
 
 describe("FMSynthUtils", () => {
@@ -22,6 +21,14 @@ describe("FMSynthUtils", () => {
         assert.deepEqual(outlet, [ A ]);
         assert(B.$isConnectedTo(A.frequency));
         assert(A.$isConnectedTo(B.frequency));
+      });
+    });
+    describe("off operator", () => {
+      it("works", () => {
+        let outlet = FMSynthUtils.build("D-C-B-A->", [ A, B, 0, 0 ]);
+
+        assert.deepEqual(outlet, [ A ]);
+        assert(B.$isConnectedTo(A.frequency));
       });
     });
     describe("operators.length === 1", () => {
@@ -220,6 +227,11 @@ describe("FMSynthUtils", () => {
           FMSynthUtils.build("@_@;", [ A, B, C, D ]);
         }, (e) => {
           return e instanceof TypeError && /invalid algorithm/i.test(e.message);
+        });
+        assert.throws(() => {
+          FMSynthUtils.build("D-C-B-A->", [ 0, 0, 0, 0 ]);
+        }, (e) => {
+          return e instanceof TypeError && /no output/i.test(e.message);
         });
       });
     });

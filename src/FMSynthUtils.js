@@ -28,8 +28,12 @@ function build(pattern, operators) {
 
   algorithm.replace(/\s+|-/g, "").split(";").forEach((algorithm) => {
     let tokens = algorithm.split("");
-    let token = tokens.shift();
-    let node = findOperatorByName(token);
+    let token, node;
+
+    while (!node && tokens.length) {
+      token = tokens.shift();
+      node = findOperatorByName(token);
+    }
 
     tokens.forEach((nextToken) => {
       if (graph[token]) {
@@ -54,6 +58,10 @@ function build(pattern, operators) {
       [ token, node ] = [ nextToken, nextNode ];
     });
   });
+
+  if (outlets.length === 0) {
+    throw new TypeError(`no output`);
+  }
 
   return outlets;
 }

@@ -16,7 +16,7 @@ export default class FMSynth {
   }
 
   get context() {
-    return this[OPERATORS][0].context;
+    return this[OUTLETS][0].context;
   }
 
   get operators() {
@@ -49,7 +49,7 @@ export default class FMSynth {
 
   start(when) {
     this[OPERATORS].forEach((op) => {
-      if (typeof op.start === "function") {
+      if (op && typeof op.start === "function") {
         op.start(when);
       }
     });
@@ -57,7 +57,7 @@ export default class FMSynth {
 
   stop(when) {
     this[OPERATORS].forEach((op) => {
-      if (typeof op.stop === "function") {
+      if (op && typeof op.stop === "function") {
         op.stop(when);
       }
     });
